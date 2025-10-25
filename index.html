@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alat Bantu Tanggapan Protocol Question (PQ) Dalam Audit Pelayanan Informasi Meteorologi Penerbangan Untuk Pengisian Ke Dashboard DNP</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            height: 100vh;
+            color: #1e293b;
+        }
+
+        /* Sidebar kategori */
+        .sidebar {
+            width: 280px;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .category {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 6px 0;
+            background-color: #334155;
+            transition: 0.2s;
+        }
+
+        .category:hover, .category.active {
+            background-color: #475569;
+        }
+
+        /* Area konten utama */
+        .main {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        /* Kotak pencarian */
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .pq-item {
+            cursor: pointer;
+            background: #e2e8f0;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin: 6px 0;
+            transition: 0.2s;
+        }
+
+        .pq-item:hover {
+            background: #cbd5e1;
+        }
+
+        .detail-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* Scorecard */
+        .scorecard {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .scorecard h4 {
+            margin: 0 0 8px;
+            color: #0f172a;
+        }
+
+        .scorecard p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .link-dokumen a {
+            color: #1d4ed8;
+            text-decoration: none;
+        }
+
+        .link-dokumen a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Kategori Audit</h2>
+        <div class="category" data-category="cat1">1. Standar, Sistem, dan Menu Pelayanan</div>
+        <div class="category" data-category="cat2">2. Fasilitas dan Peralatan Pengamatan</div>
+        <div class="category" data-category="cat3">3. SDM dan Organisasi</div>
+        <div class="category" data-category="cat4">4. Pengamatan Meteorologi Aerodrome</div>
+        <div class="category" data-category="cat5">5. Prakiraan dan Peringatan</div>
+        <div class="category" data-category="cat6">6. Pelayanan Informasi kepada Pengguna Penerbangan</div>
+        <div class="category" data-category="cat7">7. LOCA dan Koordinasi Antar Unit</div>
+        <div class="category" data-category="cat8">8. Komunikasi dan Fasilitas Pendukung</div>
+        <div class="category" data-category="cat9">9. Pengelolaan Data</div>
+        <div class="category" data-category="cat10">10. MWO</div>
+    </div>
+
+    <div class="main">
+        <h1>Alat Bantu Tanggapan Protocol Question (PQ) Dalam Audit Pelayanan Informasi Meteorologi Penerbangan Untuk Pengisian Ke Dashboard DNP</h1>
+
+        <!-- Kotak pencarian -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Cari Protocol Question (PQ)...">
+        </div>
+
+        <div id="pq-container"></div>
+        <div id="detail-container" class="detail-container"></div>
+    </div>
+
+    <script>
+        // === DATA AUDIT CONTOH ===
+        const dataAudit = {
+            cat1: [
+                {
+                    pq: "PQ 1 - Ketersediaan Standar Operasional",
+                    item: "Apakah stasiun memiliki dan menerapkan SOP pelayanan meteorologi penerbangan?",
+                    auditee: "Tersedia SOP internal yang disahkan oleh Kepala Stasiun dan mengacu pada regulasi BMKG.",
+                    panduan: "Periksa keberadaan SOP, kesesuaian dengan Annex 3, dan implementasi di lapangan.",
+                    dokumen: "https://example.com/sop-layanan"
+                },
+                {
+                    pq: "PQ 2 - Sistem Pelayanan",
+                    item: "Apakah sistem pelayanan sudah menggunakan sistem digital terintegrasi?",
+                    auditee: "Penggunaan aplikasi WIS dan AMHS untuk pertukaran data dan produk OPMET.",
+                    panduan: "Periksa akses sistem dan validasi konektivitas WIS/AMHS.",
+                    dokumen: "https://example.com/wis-amhs"
+                }
+            ],
+            cat2: [
+                {
+                    pq: "PQ 3 - Kondisi Peralatan Observasi",
+                    item: "Apakah seluruh peralatan pengamatan berfungsi baik dan terkalibrasi?",
+                    auditee: "Semua alat berfungsi dan telah dikalibrasi pada Juni 2025.",
+                    panduan: "Periksa log kalibrasi, label kalibrasi, dan hasil pengujian fungsional.",
+                    dokumen: "https://example.com/kalibrasi"
+                }
+            ],
+            cat3: [
+                {
+                    pq: "PQ 3.1 - Kompetensi Personel",
+                    item: "Apakah personel memiliki lisensi atau sertifikasi sesuai tugasnya?",
+                    auditee: "Semua observer bersertifikat, dengan pelatihan terakhir tahun 2024.",
+                    panduan: "Verifikasi sertifikat dan keikutsertaan dalam diklat refresher.",
+                    dokumen: "https://example.com/sertifikat"
+                }
+            ],
+            cat4: [
+                {
+                    pq: "PQ 4.1 - Pengamatan Cuaca",
+                    item: "Apakah pengamatan cuaca dilakukan sesuai jadwal dan format METAR?",
+                    auditee: "Pengamatan dilakukan setiap 30 menit dengan format sesuai Annex 3.",
+                    panduan: "Periksa konsistensi antara log observasi dan laporan METAR.",
+                    dokumen: "https://example.com/metar"
+                }
+            ],
+            cat5: [
+                {
+                    pq: "PQ 5.1 - Penerbitan Peringatan",
+                    item: "Apakah peringatan cuaca diterbitkan tepat waktu dan formatnya benar?",
+                    auditee: "Peringatan dikeluarkan sesuai kriteria SIGMET, diupdate setiap 4 jam.",
+                    panduan: "Periksa format SIGMET dan waktu pembaruannya.",
+                    dokumen: "https://example.com/sigmet"
+                }
+            ],
+            cat6: [
+                {
+                    pq: "PQ 6.1 - Pelayanan Pengguna",
+                    item: "Apakah informasi cuaca disampaikan secara efektif ke pengguna?",
+                    auditee: "Informasi disampaikan melalui briefing dan WAFS bulletin.",
+                    panduan: "Cek dokumentasi briefing dan testimoni pengguna.",
+                    dokumen: "https://example.com/briefing"
+                }
+            ],
+            cat7: [
+                {
+                    pq: "PQ 7.1 - Koordinasi LOCA",
+                    item: "Apakah koordinasi LOCA dilakukan dengan unit ATS dan SAR?",
+                    auditee: "Rapat koordinasi dilaksanakan triwulan dengan berita acara lengkap.",
+                    panduan: "Periksa notulen rapat dan daftar hadir peserta LOCA.",
+                    dokumen: "https://example.com/loca"
+                }
+            ],
+            cat8: [
+                {
+                    pq: "PQ 8.1 - Komunikasi Operasional",
+                    item: "Apakah sarana komunikasi antar unit berfungsi baik?",
+                    auditee: "Radio VHF dan saluran telepon khusus berfungsi normal.",
+                    panduan: "Periksa catatan uji fungsi komunikasi mingguan.",
+                    dokumen: "https://example.com/komunikasi"
+                }
+            ],
+            cat9: [
+                {
+                    pq: "PQ 9.1 - Pengelolaan Data Cuaca",
+                    item: "Apakah data meteorologi tersimpan dan dibackup dengan aman?",
+                    auditee: "Backup dilakukan harian ke server pusat melalui jaringan aman.",
+                    panduan: "Periksa log backup dan sistem keamanan data.",
+                    dokumen: "https://example.com/data-backup"
+                }
+            ],
+            cat10: [
+                {
+                    pq: "PQ 10.1 - Operasi MWO",
+                    item: "Apakah MWO melaksanakan pemantauan area tanggung jawab sesuai ICAO?",
+                    auditee: "Pemantauan dilakukan 24 jam sesuai area tanggung jawab FIR Jakarta.",
+                    panduan: "Periksa produk SIGWX dan catatan shift monitoring.",
+                    dokumen: "https://example.com/mwo"
+                }
+            ]
+        };
+
+        const pqContainer = document.getElementById('pq-container');
+        const detailContainer = document.getElementById('detail-container');
+        const searchInput = document.getElementById('searchInput');
+        const categories = document.querySelectorAll('.category');
+        let currentCategory = null;
+
+        categories.forEach(cat => {
+            cat.addEventListener('click', () => {
+                categories.forEach(c => c.classList.remove('active'));
+                cat.classList.add('active');
+                const key = cat.dataset.category;
+                currentCategory = key;
+                showPQList(key);
+                detailContainer.style.display = 'none';
+                searchInput.value = ''; // reset pencarian saat ganti kategori
+            });
+        });
+
+        function showPQList(categoryKey, keyword = '') {
+            pqContainer.innerHTML = '';
+            const pqList = dataAudit[categoryKey] || [];
+            const filtered = pqList.filter(pq =>
+                pq.pq.toLowerCase().includes(keyword.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                pqContainer.innerHTML = '<p><i>Tidak ada Protocol Question ditemukan.</i></p>';
+                return;
+            }
+
+            filtered.forEach(pq => {
+                const div = document.createElement('div');
+                div.classList.add('pq-item');
+                div.textContent = pq.pq;
+                div.addEventListener('click', () => showDetail(pq));
+                pqContainer.appendChild(div);
+            });
+        }
+
+        function showDetail(pq) {
+            detailContainer.style.display = 'block';
+            detailContainer.innerHTML = `
+                <div class="scorecard"><h4>Item Protocol</h4><p>${pq.item}</p></div>
+                <div class="scorecard"><h4>Tanggapan Auditee</h4><p>${pq.auditee}</p></div>
+                <div class="scorecard"><h4>Panduan Pemeriksaan</h4><p>${pq.panduan}</p></div>
+                <div class="scorecard link-dokumen"><h4>Bukti / Link Dokumen</h4><p><a href="${pq.dokumen}" target="_blank">${pq.dokumen}</a></p></div>
+            `;
+        }
+
+        // Fungsi pencarian real-time
+        searchInput.addEventListener('input', () => {
+            if (currentCategory) {
+                showPQList(currentCategory, searchInput.value);
+            }
+        });
+    </script>
+</body>
+</html>
